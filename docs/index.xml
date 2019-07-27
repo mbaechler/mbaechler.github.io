@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Matthieu&#39;s blog</title>
+    <link>https://mbaechler.github.io/</link>
+    <description>Recent content on Matthieu&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Jul 2019 19:05:02 +0200</lastBuildDate>
+    
+	<atom:link href="https://mbaechler.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Oop Disaster Reviewed</title>
+      <link>https://mbaechler.github.io/blog/oop-disaster-reviewed/</link>
+      <pubDate>Sat, 27 Jul 2019 19:05:02 +0200</pubDate>
+      
+      <guid>https://mbaechler.github.io/blog/oop-disaster-reviewed/</guid>
+      <description>A response to &#34;Object-Oriented Programming — The Trillion Dollar Disaster&#34; Article, part #1 The context Someone wrote a lengthly article here that took off on twitter. Some friends of mine asked my opinion publicly, I don&amp;#8217;t know exactly why.
+ So I read it.
+ And I didn&amp;#8217;t agree with many things he wrote.
+ And twitter is not a good place to explain opinions, so I promised to write a blog post.</description>
+    </item>
+    
+  </channel>
+</rss>
