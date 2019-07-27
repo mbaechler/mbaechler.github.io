@@ -1,0 +1,130 @@
+---
+title: "Oop Disaster Reviewed"
+date: 2019-07-27T19:05:02+02:00
+draft: false
+---
+
+## A response to "Object-Oriented Programming — The Trillion Dollar Disaster" Article, part #1
+
+### The context
+
+Someone wrote a lengthly article link:https://medium.com/codeiq/object-oriented-programming-the-trillion-dollar-disaster-%EF%B8%8F-92a4b666c7c7[here] that took off on twitter. Some friends of mine asked my opinion publicly, I don't know exactly why.
+
+So I read it.
+
+And I didn't agree with many things he wrote.
+
+And twitter is not a good place to explain opinions, so I promised to write a blog post.
+
+I started answering the whole article by it's a huge challenge. So I decided to post my comments as a series.
+
+Keep in mind that I don't know the author and I don't intend to offend him. I'm trying to share my ideas as he did. It's just easier for me because he wrote the ideas first and I just have to react.
+
+
+### About complexity, shared mutable state and design patterns
+
+[quote]
+____
+OOP is considered by many to be the crown jewel of computer science. The ultimate solution to code organization. The end to all our problems. The only true way to write our programs. Bestowed upon us by the one true God of programming himself…
+____
+
+
+Here the writer creates fictional people that say exaggerated things. It's a good way to explain how you disagree. I will try as much as I can to avoid reacting to these sentences and be focus on technical aspects. 
+
+[quote]
+____
+Until…it’s not, and people start succumbing under the weight of abstractions, and the complex graph of promiscuously shared mutable objects. Precious time and brainpower are being spent thinking about “abstractions” and “design patterns” instead of solving real-world problems.
+____
+
+
+And here we start. We have:
+
+1. complex graph of objects
+2. shared mutable state
+3. "abstractions" and "design patterns" vs solving problems
+
+#### Complexity
+
+The topic of complexity is a very important one. But you can't discuss it without refining the concepts a bit. I learned that complexity comes in two forms: essential complexity and accidental complexity.
+
+Essential complexity is related to the complexity of the domain you work on. 
+
+For example, handling recurrent events in a timezone-aware calendar is very complex because you would probably have a hard time describing all the edge-cases involved.
+
+Some domains are not so hard (I will not pick an example because I would not like to say someone's else job is easy).
+
+It's called essential because you can't write software that is less complex than the solution you need to solve the problem. The more complex the solution is, the more complex the code will be.
+
+Accidental complexity, on the other side, is related to the problems you solve that are not part of the domain. JSON encoding? Cache invalidation? DB connection? Resource handling? Language weakness workaround? They all are accidental complexity: you need to write code for technical reasons, not for domain problem-solving.
+
+The goal of software being solving domain problems, accidental complexity should, as much as possible, be kept as low as possible.
+
+However, some complex problems solved with OOP will lead to complex graphs of objects. Is it a problem? Is it worse than a complex graph of data structures?
+
+I saw a lot of developers (including myself) writing software much too complex, that's not something I will deny. However, writing simple code for a given purpose is much harder than writing complex code. Very often, measuring the accidental complexity of a project is a measure of two things: how good is the team and how much was invested in code quality.
+
+In my own experience, both parameters are usually not high enough for projects to not "start succumbing under the weight of abstractions, and the complex graph of promiscuously shared mutable objects".
+
+But is OOP to blame? Or do we live in a world where OOP and bad software are ubiquitous, but not related?
+
+My take is that OOP is not the problem.
+
+#### Shared mutable state
+
+Oh yes. If mutable state adds complexity, shared mutable state is a nightmare.
+
+And testing probably won't help you much about that.
+
+It's no surprise we see so many languages now being immutable by default (Rust, OCAML, probably F## too) and so many libraries offering tools to help in other languages.
+
+Vavr is a well-known Java library that implements Persistent Datastructures. Immutable-js does the same for JS. And I'm sure the list is long.
+
+And you know what? Java, probably the most hated OOP language in the world, adopted immutability long ago in its community.
+
+If you read Effective Java Third Edition, somehow the reference when you start writing java as a professional, Item 17 is: Minimize mutability.
+
+So I agree with the author that mutability is a problem, but not an OOP problem.
+
+Once again, if you often chase bugs related to mutability in your codebase, it's not a consequence of OOP but of the same two parameters described earlier: how good is the team and how much was invested in code quality.
+
+
+#### "abstractions" and "design patterns" vs solving problems
+
+Abstractions and design patterns are two names for a single concept: it generalizes actual things and examples into concepts and ideas. By doing so, it gives names to these concepts to be able to talk about them with people.
+
+For example: sometimes we need something to happen later, on-demand. We create a function with no parameter for that. Let's say another function then requires this function:
+
+```scala
+val f = () => new MyObject();
+
+def doSomething(f: () => MyObject): Unit = ???
+```
+
+In computer science, this function has many names. It's sometimes called a Supplier. We would write it:
+
+```scala
+def doSomething(f: Supplier[MyObject]): Unit = ???
+```
+
+The downside of the second version is: you need to learn what a Supplier is. However, once you learned, the understanding is much more straightforward.
+
+I could write dozens of examples like this. 
+
+Does it prevent you from solving problems? I don't think so.
+
+Do you need to learn things that are not part of the domain? Yes, of course. It's our job: we learn technical things to write software. We learned functions, classes, if/else. We also need to learn patterns because they all belong to our toolbox as software developers.
+
+As an extreme counter-example: function is always a kind of design pattern: you extract a part of your logic in a unit that you will be reuse in different contexts to avoid repeating yourself and at the same time give this unit of logic a name. Would you want to write code without using functions?
+
+My opinion about that is: there are more things to learn than what we can. It took years before I finally learned what a Monad is. I still didn't figure out the different recursion schemes that exist. Yet I will never blame people because abstractions come in my way while trying to solve problems.
+
+In my experience there are two limits to the use of abstractions:
+
+* you should not write code that your team doesn't understand and master. That means if you want to use something others don't know, that you will have to teach it, to let them some time to evaluate it, and finally you will maybe convince them to adopt it in your project.
+
+* abstractions should not add to the accidental complexity of your project but to remove some. 
+
+## Conclusion
+
+This article is already longer than I'd want. Let's keep some topics for part #2. Let me know about your opinion on twitter at @m_baechler.
+
